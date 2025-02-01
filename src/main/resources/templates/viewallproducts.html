@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Product List</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.themelyf.com/v1/style.css">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 20px;
+			background-color: #f9f9f9;
+			color: #333;
+		}
+
+		h1 {
+			text-align: center;
+			color: #4CAF50;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 20px 0;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			background-color: #fff;
+		}
+
+		table th,
+		table td {
+			padding: 12px 15px;
+			text-align: left;
+			border: 1px solid #ddd;
+		}
+
+		table th {
+			background-color: #4CAF50;
+			color: white;
+			text-transform: uppercase;
+			font-size: 14px;
+		}
+
+		table tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		table tr:hover {
+			background-color: #eaf5ea;
+		}
+
+		a {
+			text-decoration: none;
+			color: #4CAF50;
+			font-weight: bold;
+			margin-right: 10px;
+		}
+
+
+
+		.add-product {
+			display: inline-block;
+			margin: 20px 0;
+			padding: 10px 15px;
+			background-color: #4CAF50;
+			color: white;
+			text-transform: uppercase;
+			font-size: 14px;
+			font-weight: bold;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.add-product:hover {
+			background-color: #37803a;
+		}
+
+		.op-buttons-view,
+		.op-buttons-edit,
+		.op-buttons-delete {
+			display: inline-block;
+
+			padding: 7px 15px;
+			background-color: #4CAF50;
+			color: white;
+			text-transform: uppercase;
+			font-size: 14px;
+			font-weight: bold;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.op-buttons-edit {
+
+			background-color: #5badf7;
+		}
+
+		.op-buttons-view {
+
+			background-color: #f7ae63;
+		}
+
+		.op-buttons-delete {
+
+			background-color: #f35757;
+		}
+
+		.op-buttons-edit:hover {
+
+			background-color: #1487ef;
+		}
+
+		.op-buttons-view:hover {
+
+			background-color: #fb8409;
+		}
+
+		.op-buttons-delete:hover {
+
+			background-color: #f22222;
+		}
+
+		.navbar {
+			background-color: steelblue;
+			/* Dark background color */
+			padding: 20px 0;
+			/* Add some vertical padding */
+			display: flex;
+			justify-content: center;
+			/* Center the nav items */
+		}
+
+		.nav-list {
+			list-style: none;
+			/* Remove bullet points */
+			margin: 0;
+			/* Remove default margin */
+			padding: 0;
+			/* Remove default padding */
+			display: flex;
+			/* Align items horizontally */
+			gap: 40px;
+			/* Add space between items */
+		}
+
+		.nav-list li {
+			margin: 0;
+		}
+
+		.nav-list a {
+					text-decoration: none;
+					/* Remove underline */
+					color: white;
+					/* White text */
+					padding: 15px 25px;
+					/* Add padding around links */
+					border-radius: 10px;
+					/* Add slight rounding to corners */
+					transition: font-size 0.3s ease, color 0.3s ease;
+					/* Smooth hover effect */
+				}
+
+		.nav-list a:hover {
+			background-color: skyblue;
+			color: black;
+			font-weight: bold;
+			/* Makes text bold */
+			font-size: 20px;
+			/* Change background on hover */
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+		}
+
+		h1 {
+			color: #4CAF50;
+			font-family: 'Arial', sans-serif;
+			font-size: 2.5rem;
+			text-align: center;
+			margin-top: 50px;
+			text-shadow: 2px 2px 4px #aaa;
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar">
+		<ul class="nav-list">
+			<li><a th:href="@{/home}">Home</a></li>
+			<li><a th:href="@{/addproduct}">Add Product</a></li>
+			<li><a th:href="@{/viewallproducts}">Product Ineventory</a></li>
+			<li><a th:href="@{/logout}">Logout</a></li>
+		</ul>
+	</nav>
+	<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+	<h1>Product List</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<!-- <th>ID</th> -->
+				<th>Brand</th>
+				<th>Model</th>
+				<!--  <th>Colour</th>
+                <th>Storage</th>
+                <th>Camera</th>
+                <th>Display Size</th>
+                <th>OS</th> -->
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${products}">
+				<!-- <td th:text="${product.productid}"></td> -->
+				<td th:text="${product.brand}"></td>
+				<td th:text="${product.model}"></td>
+				<!-- <td th:text="${product.colour}"></td> -->
+				<!-- <td th:text="${product.storage}"></td> -->
+				<!-- <td th:text="${product.camera}"></td> -->
+				<!-- <td th:text="${product.displaySize}"></td> -->
+				<!-- <td th:text="${product.os}"></td> -->
+				<td th:text="${product.description}"></td>
+				<td>
+
+					<a th:href="@{/viewproduct/{id}(id=${product.productid})}" class="op-buttons-view">View</a>
+					<a th:href="@{/editproduct/{id}(id=${product.productid})}" class="op-buttons-edit">Edit</a>
+					<a th:href="@{/deleteproduct/{id}(id=${product.productid})}" class="op-buttons-delete">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="/addproduct" class="add-product">Add Product</a>
+</body>
+
+</html>
